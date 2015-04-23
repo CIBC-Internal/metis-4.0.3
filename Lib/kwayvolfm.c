@@ -1160,7 +1160,7 @@ void ComputeKWayVolume(GraphType *graph, int nupd, idxtype *updind, idxtype *mar
       }
     }
 
-    myrinfo->gv = -MAXIDX;
+    myrinfo->gv = -(MAXIDX);
     for (k=0; k<myrinfo->ndegrees; k++) {
       if (myedegrees[k].gv > myrinfo->gv)
         myrinfo->gv = myedegrees[k].gv;

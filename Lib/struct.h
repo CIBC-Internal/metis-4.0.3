@@ -21,7 +21,7 @@ typedef int idxtype;
 typedef short idxtype;
 #endif
 
-#define MAXIDX	(1<<8*sizeof(idxtype)-2)
+#define MAXIDX	((1<<8*sizeof(idxtype)-2))
 
 
 /*************************************************************************

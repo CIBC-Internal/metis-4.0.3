@@ -232,7 +232,7 @@ void ComputeKWayVolGains(CtrlType *ctrl, GraphType *graph, int nparts)
   graph->minvol = graph->nbnd = 0;
   for (i=0; i<nvtxs; i++) {
     myrinfo = rinfo+i;
-    myrinfo->gv = -MAXIDX;
+    myrinfo->gv = -(MAXIDX);
 
     if (myrinfo->ndegrees > 0) {
       me = where[i];
