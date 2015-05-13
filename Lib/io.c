@@ -17,8 +17,8 @@
 
 
 /*************************************************************************
-* This function reads the spd matrix
-**************************************************************************/
+ * This function reads the spd matrix
+ **************************************************************************/
 void ReadGraph(GraphType *graph, char *filename, int *wgtflag)
 {
   int i, j, k, l, fmt, readew, readvw, ncon, edge, ewgt;
@@ -74,7 +74,7 @@ void ReadGraph(GraphType *graph, char *filename, int *wgtflag)
 
   /*printf("%d %d %d %d %d [%d %d]\n", fmt, fmt%10, (fmt/10)%10, ncon, graph->ncon, readew, readvw);*/
 
-  if (graph->nvtxs > MAXIDX) 
+  if (graph->nvtxs > MAXIDX)
     errexit("\nThe matrix is too big: %d [%d %d]\n", graph->nvtxs, MAXIDX, sizeof(idxtype));
 
   xadj = graph->xadj = idxsmalloc(graph->nvtxs+1, 0, "ReadGraph: xadj");
@@ -95,7 +95,7 @@ void ReadGraph(GraphType *graph, char *filename, int *wgtflag)
     oldstr = line;
     newstr = NULL;
 
-    if (strlen(line) == MAXLINE) 
+    if (strlen(line) == MAXLINE)
       errexit("\nBuffer for fgets not big enough!\n");
 
     if (readvw) {
@@ -118,10 +118,10 @@ void ReadGraph(GraphType *graph, char *filename, int *wgtflag)
         break;
 
       adjncy[k] = edge;
-      if (readew) 
+      if (readew)
         adjwgt[k] = ewgt;
       k++;
-    } 
+    }
     xadj[i+1] = k;
   }
 
@@ -147,8 +147,8 @@ void ReadGraph(GraphType *graph, char *filename, int *wgtflag)
 
 
 /*************************************************************************
-* This function writes out the partition vector
-**************************************************************************/
+ * This function writes out the partition vector
+ **************************************************************************/
 void WritePartition(char *fname, idxtype *part, int n, int nparts)
 {
   FILE *fpout;
@@ -157,7 +157,7 @@ void WritePartition(char *fname, idxtype *part, int n, int nparts)
 
   sprintf(filename,"%s.part.%d",fname, nparts);
 
-  if ((fpout = fopen(filename, "w")) == NULL) 
+  if ((fpout = fopen(filename, "w")) == NULL)
     errexit("Problems in opening the partition file: %s", filename);
 
   for (i=0; i<n; i++)
@@ -169,8 +169,8 @@ void WritePartition(char *fname, idxtype *part, int n, int nparts)
 
 
 /*************************************************************************
-* This function writes out the partition vectors for a mesh
-**************************************************************************/
+ * This function writes out the partition vectors for a mesh
+ **************************************************************************/
 void WriteMeshPartition(char *fname, int nparts, int ne, idxtype *epart, int nn, idxtype *npart)
 {
   FILE *fpout;
@@ -179,7 +179,7 @@ void WriteMeshPartition(char *fname, int nparts, int ne, idxtype *epart, int nn,
 
   sprintf(filename,"%s.epart.%d",fname, nparts);
 
-  if ((fpout = fopen(filename, "w")) == NULL) 
+  if ((fpout = fopen(filename, "w")) == NULL)
     errexit("Problems in opening the partition file: %s", filename);
 
   for (i=0; i<ne; i++)
@@ -189,7 +189,7 @@ void WriteMeshPartition(char *fname, int nparts, int ne, idxtype *epart, int nn,
 
   sprintf(filename,"%s.npart.%d",fname, nparts);
 
-  if ((fpout = fopen(filename, "w")) == NULL) 
+  if ((fpout = fopen(filename, "w")) == NULL)
     errexit("Problems in opening the partition file: %s", filename);
 
   for (i=0; i<nn; i++)
@@ -203,8 +203,8 @@ void WriteMeshPartition(char *fname, int nparts, int ne, idxtype *epart, int nn,
 
 
 /*************************************************************************
-* This function writes out the partition vector
-**************************************************************************/
+ * This function writes out the partition vector
+ **************************************************************************/
 void WritePermutation(char *fname, idxtype *iperm, int n)
 {
   FILE *fpout;
@@ -213,7 +213,7 @@ void WritePermutation(char *fname, idxtype *iperm, int n)
 
   sprintf(filename,"%s.iperm",fname);
 
-  if ((fpout = fopen(filename, "w")) == NULL) 
+  if ((fpout = fopen(filename, "w")) == NULL)
     errexit("Problems in opening the permutation file: %s", filename);
 
   for (i=0; i<n; i++)
@@ -226,8 +226,8 @@ void WritePermutation(char *fname, idxtype *iperm, int n)
 
 
 /*************************************************************************
-* This function checks if a graph is valid
-**************************************************************************/
+ * This function checks if a graph is valid
+ **************************************************************************/
 int CheckGraph(GraphType *graph)
 {
   int i, j, k, l, nvtxs, err=0;
@@ -265,7 +265,7 @@ int CheckGraph(GraphType *graph)
     }
   }
 
-  if (err > 0) 
+  if (err > 0)
     printf("A total of %d errors exist in the input file. Correct them, and run again!\n", err);
 
   return (err == 0 ? 1 : 0);
@@ -273,8 +273,8 @@ int CheckGraph(GraphType *graph)
 
 
 /*************************************************************************
-* This function reads the element node array of a mesh
-**************************************************************************/
+ * This function reads the element node array of a mesh
+ **************************************************************************/
 idxtype *ReadMesh(char *filename, int *ne, int *nn, int *etype)
 {
   int i, j, k, esize;
@@ -292,20 +292,20 @@ idxtype *ReadMesh(char *filename, int *ne, int *nn, int *etype)
   }
 
   switch (*etype) {
-    case 1:
-      esize = 3;
-      break;
-    case 2:
-      esize = 4;
-      break;
-    case 3:
-      esize = 8;
-      break;
-    case 4:
-      esize = 4;
-      break;
-    default:
-      errexit("Unknown mesh-element type: %d\n", *etype);
+  case 1:
+    esize = 3;
+    break;
+  case 2:
+    esize = 4;
+    break;
+  case 3:
+    esize = 8;
+    break;
+  case 4:
+    esize = 4;
+    break;
+  default:
+    errexit("Unknown mesh-element type: %d\n", *etype);
   }
 
   elmnts = idxmalloc(esize*(*ne), "ReadMesh: elmnts");
@@ -327,8 +327,8 @@ idxtype *ReadMesh(char *filename, int *ne, int *nn, int *etype)
 
 
 /*************************************************************************
-* This function writes a graphs into a file 
-**************************************************************************/
+ * This function writes a graphs into a file
+ **************************************************************************/
 void WriteGraph(char *filename, int nvtxs, idxtype *xadj, idxtype *adjncy)
 {
   int i, j;
@@ -352,8 +352,8 @@ void WriteGraph(char *filename, int nvtxs, idxtype *xadj, idxtype *adjncy)
 
 
 /*************************************************************************
-* This function writes a graphs into a file 
-**************************************************************************/
+ * This function writes a graphs into a file
+ **************************************************************************/
 void WriteMocGraph(GraphType *graph)
 {
   int i, j, nvtxs, ncon;
@@ -387,4 +387,47 @@ void WriteMocGraph(GraphType *graph)
   }
 
   fclose(fpout);
+}
+
+void partnmesh(char * meshfile, int nparts) {
+  int ne, nn, etype, numflag=0, edgecut;
+  idxtype *elmnts, *epart, *npart;
+  timer IOTmr, DUALTmr;
+  char etypestr[4][5] = {"TRI", "TET", "HEX", "QUAD"};
+
+  cleartimer(IOTmr);
+  cleartimer(DUALTmr);
+
+  starttimer(IOTmr);
+  elmnts = ReadMesh(meshfile, &ne, &nn, &etype);
+  stoptimer(IOTmr);
+
+  char str[] = "main: epart";
+  char str2[] = "main: npart";
+  epart = idxmalloc(ne, str);
+  npart = idxmalloc(nn, str2);
+
+  printf("**********************************************************************\n");
+  printf("%s", METISTITLE);
+  printf("Mesh Information ----------------------------------------------------\n");
+  printf("  Name: %s, #Elements: %d, #Nodes: %d, Etype: %s\n\n",
+      meshfile, ne, nn, etypestr[etype-1]);
+  printf("Partitioning Nodal Graph... -----------------------------------------\n");
+
+  starttimer(DUALTmr);
+  METIS_PartMeshNodal(&ne, &nn, elmnts, &etype, &numflag, &nparts, &edgecut, epart, npart);
+  stoptimer(DUALTmr);
+
+  printf("  %d-way Edge-Cut: %7d, Balance: %5.2f\n",
+      nparts, edgecut, ComputeElementBalance(ne, nparts, epart));
+
+  starttimer(IOTmr);
+  WriteMeshPartition(meshfile, nparts, ne, epart, nn, npart);
+  stoptimer(IOTmr);
+
+
+  printf("\nTiming Information --------------------------------------------------\n");
+  printf("  I/O:          \t\t %7.3f\n", gettimer(IOTmr));
+  printf("  Partitioning: \t\t %7.3f\n", gettimer(DUALTmr));
+  GKfree(&elmnts, &epart, &npart, LTERM);
 }
