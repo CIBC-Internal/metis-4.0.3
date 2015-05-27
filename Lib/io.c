@@ -13,7 +13,7 @@
  */
 
 #include <metis.h>
-#include <cstring>
+#include <string.h>
 
 
 
