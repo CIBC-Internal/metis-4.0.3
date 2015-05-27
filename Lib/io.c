@@ -402,10 +402,10 @@ void partnmesh(char * meshfile, int nparts) {
   elmnts = ReadMesh(meshfile, &ne, &nn, &etype);
   stoptimer(IOTmr);
 
-  char str[] = "main: epart";
-  char str2[] = "main: npart";
-  epart = idxmalloc(ne, str);
-  npart = idxmalloc(nn, str2);
+  std::string str = "main: epart";
+  std::string str2 = "main: npart";
+  epart = idxmalloc(ne, str.c_str());
+  npart = idxmalloc(nn, str2.c_str());
 
   printf("**********************************************************************\n");
   printf("%s", METISTITLE);
