@@ -13,7 +13,6 @@
  */
 
 #include <metis.h>
-#include <string.h>
 
 
 
@@ -403,10 +402,10 @@ void partnmesh(char * meshfile, int nparts) {
   elmnts = ReadMesh(meshfile, &ne, &nn, &etype);
   stoptimer(IOTmr);
 
-  std::string str = "main: epart";
-  std::string str2 = "main: npart";
-  epart = idxmalloc(ne, str.c_str());
-  npart = idxmalloc(nn, str2.c_str());
+  char str[] = "main: epart";
+  char str2[] = "main: npart";
+  epart = idxmalloc(ne, str);
+  npart = idxmalloc(nn, str2);
 
   printf("**********************************************************************\n");
   printf("%s", METISTITLE);
