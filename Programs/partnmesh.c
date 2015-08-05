@@ -3,7 +3,7 @@
  *
  * partnmesh.c
  *
- * This file reads in the element node connectivity array of a mesh and 
+ * This file reads in the element node connectivity array of a mesh and
  * partitions both the elements and the nodes using KMETIS on the dual graph.
  *
  * Started 9/29/97
@@ -18,8 +18,8 @@
 
 
 /*************************************************************************
-* Let the game begin
-**************************************************************************/
+ * Let the game begin
+ **************************************************************************/
 main(int argc, char *argv[])
 {
   int i, j, ne, nn, etype, numflag=0, nparts, edgecut;
@@ -28,9 +28,19 @@ main(int argc, char *argv[])
   char etypestr[4][5] = {"TRI", "TET", "HEX", "QUAD"};
   GraphType graph;
 
-  if (argc != 3) {
-    printf("Usage: %s <meshfile> <nparts>\n",argv[0]);
+  if (argc < 3 || argc > 4) {
+    printf("Usage: %s <meshfile> <nparts> [-v]\n",argv[0]);
+    printf("        -v              Show verbose information\n");
     exit(0);
+  }
+  bool verbose = false;
+  if (argc == 4) {
+    if (strcmp("-v",argv[3]) != 0) {
+      printf("Usage: %s <meshfile> <nparts> [-v]\n",argv[0]);
+      printf("        -v              Show verbose information\n");
+      exit(0);
+    }
+    verbose = true;
   }
 
   nparts = atoi(argv[2]);
@@ -38,7 +48,7 @@ main(int argc, char *argv[])
     printf("nparts must be greater than one.\n");
     exit(0);
   }
-   
+
   cleartimer(IOTmr);
   cleartimer(DUALTmr);
 
@@ -48,43 +58,32 @@ main(int argc, char *argv[])
 
   epart = idxmalloc(ne, "main: epart");
   npart = idxmalloc(nn, "main: npart");
-
-  printf("**********************************************************************\n");
-  printf("%s", METISTITLE);
-  printf("Mesh Information ----------------------------------------------------\n");
-  printf("  Name: %s, #Elements: %d, #Nodes: %d, Etype: %s\n\n", argv[1], ne, nn, etypestr[etype-1]);
-  printf("Partitioning Nodal Graph... -----------------------------------------\n");
-
+  if (verbose) {
+    printf("**********************************************************************\n");
+    printf("%s", METISTITLE);
+    printf("Mesh Information ----------------------------------------------------\n");
+    printf("  Name: %s, #Elements: %d, #Nodes: %d, Etype: %s\n\n", argv[1], ne, nn, etypestr[etype-1]);
+    printf("Partitioning Nodal Graph... -----------------------------------------\n");
+  }
 
   starttimer(DUALTmr);
   METIS_PartMeshNodal(&ne, &nn, elmnts, &etype, &numflag, &nparts, &edgecut, epart, npart);
   stoptimer(DUALTmr);
 
-  printf("  %d-way Edge-Cut: %7d, Balance: %5.2f\n", nparts, edgecut, ComputeElementBalance(ne, nparts, epart));
+  if( verbose)
+    printf("  %d-way Edge-Cut: %7d, Balance: %5.2f\n", nparts, edgecut, ComputeElementBalance(ne, nparts, epart));
 
   starttimer(IOTmr);
   WriteMeshPartition(argv[1], nparts, ne, epart, nn, npart);
   stoptimer(IOTmr);
 
 
-  printf("\nTiming Information --------------------------------------------------\n");
-  printf("  I/O:          \t\t %7.3f\n", gettimer(IOTmr));
-  printf("  Partitioning: \t\t %7.3f\n", gettimer(DUALTmr));
-  printf("**********************************************************************\n");
-
-/*
-  graph.nvtxs = ne;
-  graph.xadj = idxmalloc(ne+1, "xadj");
-  graph.vwgt = idxsmalloc(ne, 1, "vwgt");
-  graph.adjncy = idxmalloc(10*ne, "adjncy");
-  graph.adjwgt = idxsmalloc(10*ne, 1, "adjncy");
-
-  METIS_MeshToDual(&ne, &nn, elmnts, &etype, &numflag, graph.xadj, graph.adjncy);
-
-  ComputePartitionInfo(&graph, nparts, epart);
-
-  GKfree(&graph.xadj, &graph.adjncy, &graph.vwgt, &graph.adjwgt, LTERM);
-*/
+  if( verbose) {
+    printf("\nTiming Information --------------------------------------------------\n");
+    printf("  I/O:          \t\t %7.3f\n", gettimer(IOTmr));
+    printf("  Partitioning: \t\t %7.3f\n", gettimer(DUALTmr));
+    printf("**********************************************************************\n");
+  }
 
   GKfree(&elmnts, &epart, &npart, LTERM);
 
