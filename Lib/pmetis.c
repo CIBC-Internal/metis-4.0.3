@@ -109,11 +109,9 @@ int MlevelRecursiveBisection(CtrlType *ctrl, GraphType *graph, int nparts, idxty
 
   nvtxs = graph->nvtxs;
   if (nvtxs == 0) {
-    printf("\t***Cannot bisect a graph with 0 vertices!\n\t***You are trying to partition a graph into too many parts! M\n");
+    //no more nodes at this level, so return.
     return 0;
-  } else {
-    printf("SUCCESSFUL!\n");
-  }
+  } 
 
   /* Determine the weights of the partitions */
   tvwgt = idxsum(nvtxs, graph->vwgt);
