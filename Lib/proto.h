@@ -482,7 +482,7 @@ void WritePermutation(char *, idxtype *, int);
 int CheckGraph(GraphType *);
 idxtype *ReadMesh(char *, int *, int *, int *);
 void WriteGraph(char *, int, idxtype *, idxtype *);
-void partnmesh(char * meshfile, int nparts, bool verbose = false);
+void partnmesh(char * meshfile, int nparts, int verbose = 0);
 
 /* smbfactor.c */
 void ComputeFillIn(GraphType *, idxtype *);

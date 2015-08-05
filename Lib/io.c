@@ -389,7 +389,7 @@ void WriteMocGraph(GraphType *graph)
   fclose(fpout);
 }
 
-void partnmesh(char * meshfile, int nparts, bool verbose) {
+void partnmesh(char * meshfile, int nparts, int verbose) {
   int ne, nn, etype, numflag=0, edgecut;
   idxtype *elmnts, *epart, *npart;
   timer IOTmr, DUALTmr;
