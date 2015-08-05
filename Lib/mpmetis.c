@@ -245,7 +245,7 @@ int MCMlevelRecursiveBisection(CtrlType *ctrl, GraphType *graph, int nparts, idx
 
   nvtxs = graph->nvtxs;
   if (nvtxs == 0) {
-    printf("\t***Cannot bisect a graph with 0 vertices!\n\t***You are trying to partition a graph into too many parts!\n");
+    printf("\t***Cannot bisect a graph with 0 vertices!\n\t***You are trying to partition a graph into too many parts! MCM\n");
     return 0;
   }
 
@@ -300,7 +300,7 @@ int MCHMlevelRecursiveBisection(CtrlType *ctrl, GraphType *graph, int nparts, id
   nvtxs = graph->nvtxs;
   ncon = graph->ncon;
   if (nvtxs == 0) {
-    printf("\t***Cannot bisect a graph with 0 vertices!\n\t***You are trying to partition a graph into too many parts!\n");
+    printf("\t***Cannot bisect a graph with 0 vertices!\n\t***You are trying to partition a graph into too many parts! MCHM\n");
     return 0;
   }
 

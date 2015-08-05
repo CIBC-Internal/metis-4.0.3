@@ -109,7 +109,7 @@ int MlevelRecursiveBisection(CtrlType *ctrl, GraphType *graph, int nparts, idxty
 
   nvtxs = graph->nvtxs;
   if (nvtxs == 0) {
-    printf("\t***Cannot bisect a graph with 0 vertices!\n\t***You are trying to partition a graph into too many parts!\n");
+    printf("\t***Cannot bisect a graph with 0 vertices!\n\t***You are trying to partition a graph into too many parts! M\n");
     return 0;
   }
 
