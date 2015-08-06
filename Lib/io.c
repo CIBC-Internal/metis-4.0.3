@@ -394,6 +394,8 @@ void partnmesh(char * meshfile, int nparts, int verbose) {
   idxtype *elmnts, *epart, *npart;
   timer IOTmr, DUALTmr;
   char etypestr[4][5] = {"TRI", "TET", "HEX", "QUAD"};
+  char str[] = "main: epart";
+  char str2[] = "main: npart";
 
   cleartimer(IOTmr);
   cleartimer(DUALTmr);
@@ -402,8 +404,6 @@ void partnmesh(char * meshfile, int nparts, int verbose) {
   elmnts = ReadMesh(meshfile, &ne, &nn, &etype);
   stoptimer(IOTmr);
 
-  char str[] = "main: epart";
-  char str2[] = "main: npart";
   epart = idxmalloc(ne, str);
   npart = idxmalloc(nn, str2);
 
